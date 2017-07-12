@@ -1,0 +1,4 @@
+---
+'Fog::Compute::OracleCloud::Instance': 'Fog::Networking::OracleCloud::Compute'
+'Fog::OracleCloud::Database::Instance': 'Fog::Networking::OracleCloud::Database'
+'Fog::Compute::AWS::Server': 'Fog::Networking::AWS::Compute'
