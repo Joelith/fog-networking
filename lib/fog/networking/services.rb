@@ -12,8 +12,7 @@ module Fog
 				# include all the fog modules as dependencies to this one, regardless if the 
 				# end user wanted to use them all or not. Simple approach seemed to be to 
 				# just record which objects map to which classes in here. 
-
-				registry = YAML.load_file( File.expand_path('registry.yaml'))
+				registry = YAML.load_file( File.join(File.dirname(File.expand_path(__FILE__)), 'registry.yaml'))
 				if !registry[instance_to.class.to_s] then
 					raise ArgumentError.new("Fog::Networking does not currently support #{instance_to.class.to_s}")
 				end

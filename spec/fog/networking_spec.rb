@@ -9,9 +9,9 @@ describe Fog::Networking do
   end
 
   it "can connect AWS EC2 to Oracle DB" do
-  	#Fog.mock!
+  	#Fog.mock!  	
   	begin
-  		db = Fog::OracleCloud[:database].instances.get('DB4Hytera')
+  		db = Fog::OracleCloud[:database].instances.get('DB12c')
   	rescue Fog::OracleCloud::Database::NotFound		
   		puts "Not Found - Creating Oracle Instance"
   		db = Fog::OracleCloud[:database].instances.create(
@@ -26,7 +26,7 @@ describe Fog::Networking do
 				:usable_storage => '15'
 			)
 		end
-  	aws_instance = Fog::Compute[:aws].servers.get('i-07822667b62de3341')
+  	aws_instance = Fog::Compute[:aws].servers.get('i-04e3de50471aea972')
 		if !aws_instance then
 			puts "Not Found - Creating AWS Instance"
 			aws_instance = Fog::Compute[:aws].servers.create
@@ -37,6 +37,9 @@ describe Fog::Networking do
 			puts "\n"
 		end
   	Fog::Networking::Services.connect_instances(aws_instance, db, 1521)
+  	# Check access_rule
+  	rule = db.get_access_rule("#{db.service_name}_1521_#{aws_instance.public_ip_address}")
+  	rule.status == 'enabled'
   end
  
 #  it "can connect AWS and Oracle" do
